@@ -14,6 +14,8 @@ app.use(cors())
 // Firebase API key
 const FIREBASE_API_KEY = process.env.API_KEY;
 const groupClients = {};
+const PORT = process.env.PORT || 5000
+
 // Middleware to validate Firebase ID tokens
 const validateToken = async (req, res, next) => {
   const token = req.headers.authorization?.split('Bearer ')[1];
@@ -120,6 +122,6 @@ wss.on('connection', (ws) => {
 
 
 // Start Server
-server.listen(5000, () => {
+server.listen(PORT, () => {
   console.log('Server is listening on port 5000');
 });
