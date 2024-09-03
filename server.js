@@ -113,7 +113,7 @@ wss.on('connection', (ws) => {
   });
 
   ws.on('close', () => {
-    console.log('Client disconnected');
+    console.log('Clients disconnected');
     for (const group in groupClients) {
       groupClients[group].delete(ws);
     }
