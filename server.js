@@ -164,34 +164,20 @@ app.get('/my-groups', async (req, res) => {
   }
 });
 
-// Authentication Routes
 app.post('/signup', async (req, res) => {
-  const { email, password } = req.body;
-  
-  try {
-    const response = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${FIREBASE_API_KEY}`, {
-      email,
-      password,
-      returnSecureToken: true,
-    });
-    res.json(response.data);
-  } catch (error) {
-    res.status(error.response?.status || 500).json({ message: error.response?.data?.error?.message || 'Sign up failed' });
-  }
-});
+  const { user, username, email } = req.body;
 
-app.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-  
   try {
-    const response = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${FIREBASE_API_KEY}`, {
+    // Save additional user info to Firestore
+    await admin.firestore().doc(`users/${user.uid}`).set({
+      username,
       email,
-      password,
-      returnSecureToken: true,
     });
-    res.json(response.data);
+
+    res.status(201).send({ message: 'User signed up successfully!' });
   } catch (error) {
-    res.status(error.response?.status || 500).json({ message: error.response?.data?.error?.message || 'Login failed' });
+    console.error('Error saving user info to Firestore:', error.message);
+    res.status(500).send({ error: 'Failed to save user info to Firestore' });
   }
 });
 
