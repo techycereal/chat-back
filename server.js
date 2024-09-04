@@ -167,6 +167,19 @@ app.post('/signup', async (req, res) => {
   const { user, username, email } = req.body;
 
   try {
+    // Check if the username is already in use
+    const usernameQuerySnapshot = await admin.firestore().collection('users')
+      .where('username', '==', username)
+      .get();
+
+      const emailQuerySnapshot = await admin.firestore().collection('users')
+      .where('email', '==', email)
+      .get();
+
+    if (!usernameQuerySnapshot.empty && !emailQuerySnapshot.empty) {
+      return res.status(400).send({ error: 'Username or email already in use' });
+    }
+
     // Save additional user info to Firestore
     await admin.firestore().doc(`users/${user.uid}`).set({
       username,
@@ -179,6 +192,7 @@ app.post('/signup', async (req, res) => {
     res.status(500).send({ error: 'Failed to save user info to Firestore' });
   }
 });
+
 
 // Protected Route Example
 app.get('/protected', (req, res) => {
