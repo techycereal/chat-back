@@ -41,7 +41,6 @@ const validateToken = async (req, res, next) => {
   }
 };
 
-app.use(validateToken);
 
 // Fetch User Profile Route
 app.get('/user-profile', async (req, res) => {
