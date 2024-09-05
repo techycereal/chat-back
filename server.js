@@ -43,7 +43,7 @@ const validateToken = async (req, res, next) => {
 
 
 // Fetch User Profile Route
-app.get('/user-profile', async (req, res) => {
+app.get('/user-profile', validateToken, async (req, res) => {
   const userId = req.user.uid;
 
   try {
@@ -80,7 +80,7 @@ app.get('/user-profile', async (req, res) => {
   }
 });
 
-app.post('/invite-to-group', async (req, res) => {
+app.post('/invite-to-group', validateToken, async (req, res) => {
   const { usernameToInvite, group, username } = req.body;
   const inviter = req.user.uid;  // The UID of the logged-in user who is sending the invitation
 
@@ -120,7 +120,7 @@ app.post('/invite-to-group', async (req, res) => {
 });
 
 // Create Group Route
-app.post('/create-group', async (req, res) => {
+app.post('/create-group', validateToken, async (req, res) => {
   const { groupName, username } = req.body;
   
   if (groupName) {
@@ -143,7 +143,7 @@ app.post('/create-group', async (req, res) => {
 });
 
 // Fetch User Groups Route
-app.get('/my-groups', async (req, res) => {
+app.get('/my-groups', validateToken, async (req, res) => {
   try {
     const userRef = admin.firestore().doc(`users/${req.user.uid}`);
     const userDoc = await userRef.get();
