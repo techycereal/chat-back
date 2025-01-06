@@ -1,7 +1,6 @@
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
-const axios = require('axios');
 const admin = require('./firebaseConfig');
 const cors = require('cors');
 require('dotenv').config();
@@ -19,8 +18,6 @@ const io = socketIo(server, {
 app.use(express.json());
 app.use(cors());
 
-// Firebase API key
-const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY;
 const groupClients = {};
 const PORT = process.env.PORT || 5000;
 
