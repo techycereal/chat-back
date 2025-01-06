@@ -5,6 +5,10 @@ require('dotenv').config();
 const PRIVATE_KEY_ID = process.env.PRIVATE_KEY_ID
 const PRIVATE_KEY = process.env.PRIVATE_KEY
 const CLIENT_ID = process.env.CLIENT_ID  
+console.log('PRIVATE_KEY:', process.env.PRIVATE_KEY ? 'Exists' : 'Missing');
+console.log('PRIVATE_KEY_ID:', process.env.PRIVATE_KEY_ID);
+console.log('CLIENT_ID:', process.env.CLIENT_ID);
+
 const serviceAccount = {
     "type": "service_account",
     "project_id": "chatapp-e26b8",
