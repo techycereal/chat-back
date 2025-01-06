@@ -1,7 +1,7 @@
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
-const admin = require('./firebaseConfig');
+const admin = require('./firebase');
 const cors = require('cors');
 require('dotenv').config();
 
